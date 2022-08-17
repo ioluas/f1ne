@@ -11,25 +11,10 @@ func (c *Client) Seasons() (*SeasonsMRData, error) {
 	logrus.WithFields(logrus.Fields{"endpoint": url}).Trace("got endpoint url")
 
 	data := new(SeasonsMRData)
-	err := c.get(url, data)
-	if err != nil {
+	if err := c.get(url, data); err != nil {
 		return nil, err
 	}
 	return data, nil
-	// v, err := c.getKey([]byte(url))
-	// if err == nil {
-	// 	err = xml.Unmarshal(*v, data)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// } else {
-	// 	res, err := c.get(url)
-	// 	err = xml.Unmarshal(*res, data)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// }
-	// return data, nil
 }
 
 func (c *Client) SeasonsByCircuit(circuit string) (*SeasonsMRData, error) {
@@ -37,23 +22,8 @@ func (c *Client) SeasonsByCircuit(circuit string) (*SeasonsMRData, error) {
 	logrus.WithFields(logrus.Fields{"endpoint": url}).Trace("got endpoint url")
 
 	data := new(SeasonsMRData)
-	err := c.get(url, data)
-	if err != nil {
+	if err := c.get(url, data); err != nil {
 		return nil, err
 	}
 	return data, nil
-	// v, err := c.getKey([]byte(url))
-	// if err == nil {
-	// 	err = xml.Unmarshal(*v, data)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// } else {
-	// 	res, err := c.get(url)
-	// 	err = xml.Unmarshal(*res, data)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// }
-	// return data, nil
 }

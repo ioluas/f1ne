@@ -4,7 +4,7 @@ import "encoding/xml"
 
 const Endpoint = "https://ergast.com/api/f1"
 
-// DriversList
+// Drivers
 
 type DriversMRData struct {
 	XMLName xml.Name    `xml:"MRData"`

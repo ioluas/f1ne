@@ -25,7 +25,7 @@ func NewClient(db *bitcask.Bitcask) *Client {
 	}
 }
 
-func (c *Client) getKey(key []byte) (*[]byte, error) {
+func (c *Client) cached(key []byte) (*[]byte, error) {
 	if !c.cache.Has(key) {
 		logrus.WithFields(logrus.Fields{"key": string(key)}).Info("key not found in cache")
 
@@ -42,7 +42,7 @@ func (c *Client) getKey(key []byte) (*[]byte, error) {
 	return &val, nil
 }
 
-func (c *Client) setKey(key, value []byte, ttl *time.Duration) error {
+func (c *Client) setCacheKey(key, value []byte, ttl *time.Duration) error {
 	if nil != ttl {
 		if err := c.cache.PutWithTTL(key, value, *ttl); err != nil {
 			logrus.WithFields(logrus.Fields{
@@ -69,48 +69,31 @@ func (c *Client) setKey(key, value []byte, ttl *time.Duration) error {
 }
 
 func (c *Client) get(url string, holder any) error {
-	v, err := c.getKey([]byte(url))
+	v, err := c.cached([]byte(url))
 	if err == nil {
 		err = xml.Unmarshal(*v, holder)
 		if err != nil {
 			return errors.Wrap(err, "failed to unmarshal cached xml response")
 		}
-	} else {
-		res, err := c.client.Get(url)
-		if err != nil {
-			return errors.Wrap(err, "could not get result form API endpoint")
-		}
-		tmp, err := ioutil.ReadAll(res.Body)
-		if err != nil {
-			return errors.Wrap(err, "could not read response body")
-		}
-		if err = res.Body.Close(); err != nil {
-			logrus.WithFields(logrus.Fields{"error": err}).Error("failed to close response body")
-		}
-		if err = c.setKey([]byte(url), tmp, nil); err != nil {
-			logrus.Error("failed to save response to cache")
-		}
-		err = xml.Unmarshal(tmp, holder)
-		if err != nil {
-			return errors.Wrap(err, "failed to unmarshal xml response")
-		}
+		return nil
+	}
+	res, err := c.client.Get(url)
+	if err != nil {
+		return errors.Wrap(err, "could not get result form API endpoint")
+	}
+	tmp, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return errors.Wrap(err, "could not read response body")
+	}
+	if err = res.Body.Close(); err != nil {
+		logrus.WithFields(logrus.Fields{"error": err}).Error("failed to close response body")
+	}
+	if err = c.setCacheKey([]byte(url), tmp, nil); err != nil {
+		logrus.Error("failed to save response to cache")
+	}
+	err = xml.Unmarshal(tmp, holder)
+	if err != nil {
+		return errors.Wrap(err, "failed to unmarshal xml response")
 	}
 	return nil
-
-	// res, err := c.client.Get(url)
-	// if err != nil {
-	// 	return nil, errors.Wrap(err, "could not get result form API endpoint")
-	// }
-	// tmp, err := ioutil.ReadAll(res.Body)
-	// if err != nil {
-	// 	return nil, errors.Wrap(err, "could not read response body")
-	// }
-	// if err = res.Body.Close(); err != nil {
-	// 	logrus.WithFields(logrus.Fields{"error": err}).Error("failed to close response body")
-	// }
-	// if err = c.setKey([]byte(url), tmp, nil); err != nil {
-	// 	logrus.Error("failed to save response to cache")
-	// }
-	//
-	// return &tmp, nil
 }

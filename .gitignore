@@ -1,6 +1,7 @@
-# db, binaries
+# db, binaries, bundled resources
 db
 f1ne
+bundled.go
 
 # Hidden
 .idea
