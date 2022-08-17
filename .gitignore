@@ -1,0 +1,7 @@
+# db, binaries
+db
+f1ne
+
+# Hidden
+.idea
+.env
