@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -100,11 +101,21 @@ func main() {
 }
 
 func setupToolbar(c *fyne.Container) *widget.Toolbar {
+	body := ""
+	d, err := client.CurrentDriversStandings()
+	if err != nil {
+		body = err.Error()
+	} else {
+		for _, ds := range d.StandingsTable.StandingsList.DriverStandings {
+			body += fmt.Sprintf("Name: %s Nationality: %s Id: %s\n", ds.Driver.GivenName+" "+ds.Driver.FamilyName,
+				ds.Driver.Nationality, ds.Driver.Id)
+		}
+	}
 
 	drv := widget.NewToolbarAction(resourceDrivers32Png, func() {
 		logrus.Trace("clicked drivers")
 		c.RemoveAll()
-		c.Add(widget.NewLabel("hmm, this is not so easy!"))
+		c.Add(widget.NewLabel(body))
 		c.Refresh()
 	})
 
