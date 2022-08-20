@@ -18,6 +18,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt install -y gcc libgl1-mesa-dev xorg-dev
           go version
           go install golang.org/x/lint/golint@latest
 
