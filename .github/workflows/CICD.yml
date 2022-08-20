@@ -1,0 +1,38 @@
+on:
+  push:
+  pull_request:
+    branches:
+      — main
+      — develop
+
+jobs:
+  # The “build” workflow
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '>=1.19.0'
+          cache: true
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y gcc libgl1-mesa-dev xorg-dev
+          go version
+          go install golang.org/x/lint/golint@latest
+          go install fyne.io/fyne/v2/cmd/fyne@latest
+
+      - name: Run build
+        run: |
+          ./bundle.sh
+          go build .
+          go build --race .
+
+      - name: Run vet & lint
+        run: |
+          go vet .
+          golint .
+
+#      - name: Run testing
+#        run: cd test && go test -v
