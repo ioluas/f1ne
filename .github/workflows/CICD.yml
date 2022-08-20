@@ -24,6 +24,7 @@ jobs:
 
       - name: Run build
         run: |
+          ./build.sh
           go build .
           go build --race .
 
