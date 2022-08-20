@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      — main
+      — develop
+  pull_request:
+    branches:
+      — main
+      — develop
+
+jobs:
+  # The “build” workflow
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '>=1.19.0'
+          cache: true
+
+      - name: Install dependencies
+        run: |
+          go version
+          go install golang.org/x/lint/golint@latest
+
+      - name: Run build
+        run: |
+          go build .
+          go build --race .
+
+      - name: Run vet & lint
+        run: |
+          go vet .
+          golint .
+
+#      - name: Run testing
+#        run: cd test && go test -v
