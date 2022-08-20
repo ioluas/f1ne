@@ -4,12 +4,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 	"git.mills.io/prologic/bitcask"
 	"github.com/ioluas/f1ne/api"
+	"github.com/ioluas/f1ne/ui"
 	"github.com/sirupsen/logrus"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -81,32 +78,5 @@ func main() {
 		logrus.Trace("closed db")
 	}(db)
 
-	// Create new fyne app and window
-	a := app.New()
-	w := a.NewWindow("f1ne")
-	w.Resize(fyne.NewSize(800, 600))
-
-	grid := container.NewGridWithColumns(2)
-
-	// d, _ := client.Drivers()
-	// logrus.WithFields(logrus.Fields{"drivers": d.Drivers}).Info("Drivers list")
-	// s, _ := client.SeasonsByCircuit("hungaroring")
-	// logrus.WithFields(logrus.Fields{"seasons": s.Seasons, "circuit": "hungaroring"}).Info("Seasons list")
-
-	c := container.NewBorder(setupToolbar(grid), nil, nil, nil, grid)
-
-	w.SetContent(c)
-	w.ShowAndRun()
-}
-
-func setupToolbar(c *fyne.Container) *widget.Toolbar {
-
-	drv := widget.NewToolbarAction(resourceDrivers32Png, func() {
-		logrus.Trace("clicked drivers")
-		c.RemoveAll()
-		c.Add(widget.NewLabel("hmm, this is not so easy!"))
-		c.Refresh()
-	})
-
-	return widget.NewToolbar(drv, widget.NewToolbarSpacer())
+	ui.SetupAppUi(client)
 }
