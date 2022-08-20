@@ -1,4 +1,0 @@
-cars: https://www.flaticon.com/premium-icon/racing_1850717#
-drivers: https://www.flaticon.com/free-icons/racing
-
-https://www.flaticon.com/free-icons/race

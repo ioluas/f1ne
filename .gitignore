@@ -1,7 +1,8 @@
 # db, binaries, bundled resources
 db
 f1ne
-bundled.go
+ui/bundled.go
+res/icons/src.txt
 
 # Hidden
 .idea

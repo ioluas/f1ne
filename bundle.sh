@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -xeo pipefail
+set -xe
 
-fyne bundle res/icons/cars32.png > bundled.go
-fyne bundle -append res/icons/drivers32.png >> bundled.go
+fyne bundle --package ui --prefix embeddedRsc -o ui/bundled.go res/icons/cars32.png
+fyne bundle --package ui --append --prefix embeddedRsc -o ui/bundled.go res/icons/drivers32.png
+fyne bundle --package ui --append --prefix embeddedRsc -o ui/bundled.go res/icons/standings32.png
+fyne bundle --package ui --append --prefix embeddedRsc -o ui/bundled.go res/icons/seasons32.png
