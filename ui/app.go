@@ -8,7 +8,7 @@ import (
 )
 
 func SetupAppUi(cli *api.Client) {
-	a := app.New()
+	a := app.NewWithID("f1ne")
 	w := a.NewWindow("f1ne")
 	w.Resize(fyne.NewSize(1_280, 1_024))
 	w.SetMaster()
@@ -17,6 +17,8 @@ func SetupAppUi(cli *api.Client) {
 	toolbar := SetupToolbarUi(grid, cli)
 	borderedContainer := container.NewBorder(toolbar, nil, nil, nil, grid)
 	w.SetContent(borderedContainer)
+	w.SetPadded(false)
 
-	w.ShowAndRun()
+	w.Show()
+	a.Run()
 }

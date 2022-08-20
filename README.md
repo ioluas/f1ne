@@ -1,6 +1,4 @@
-# f1ne 🏎️
-
-## Work In Progress 🚧
+# <img style="background-color: white;" src="res/icons/Icon.png"> f1ne (Work In Progress 🚧)
 
 ![CI](https://github.com/ioluas/f1ne/actions/workflows/CICD.yml/badge.svg?branch=develop)
 
@@ -25,3 +23,4 @@ F1 racing application for viewing & graphing F1 related data.
   - [FlatIcon - Racing](https://www.flaticon.com/free-icons/racing)
   - [FlatIcon - Start](https://www.flaticon.com/free-icons/start)
   - [FlatIcon - Time & Date](https://www.flaticon.com/free-icons/time-and-date)
+  - [FlatIcon - Race car](https://www.flaticon.com/free-icons/race-car)

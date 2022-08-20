@@ -1,8 +1,8 @@
 Website = "https://github.com/ioluas/f1ne"
 
 [Details]
-Icon = "Icon.png"
-Name = "f1ne"
-ID = "ioluas/fine"
-Version = "0.0.1"
-Build = 1
+  Icon = "res/icons/Icon.png"
+  Name = "f1ne"
+  ID = "ioluas/fine"
+  Version = "0.0.1"
+  Build = 3

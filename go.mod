@@ -6,6 +6,8 @@ require (
 	fyne.io/fyne/v2 v2.2.3
 	git.mills.io/prologic/bitcask v1.0.2
 	github.com/joho/godotenv v1.4.0
+	github.com/pkg/errors v0.9.1
+	github.com/sirupsen/logrus v1.9.0
 )
 
 require (
@@ -24,10 +26,8 @@ require (
 	github.com/goki/freetype v0.0.0-20181231101311-fa8a33aabaff // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/plar/go-adaptive-radix-tree v1.0.4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/srwiley/oksvg v0.0.0-20200311192757-870daf9aa564 // indirect
 	github.com/srwiley/rasterx v0.0.0-20200120212402-85cb7272f5e9 // indirect
 	github.com/stretchr/testify v1.7.2 // indirect
