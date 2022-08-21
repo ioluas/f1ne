@@ -7,18 +7,37 @@ import (
 	"github.com/ioluas/f1ne/api"
 )
 
-func SetupAppUi(cli *api.Client) {
-	a := app.NewWithID("f1ne")
-	w := a.NewWindow("f1ne")
-	w.Resize(fyne.NewSize(1_280, 1_024))
-	w.SetMaster()
+type F1neUi struct {
+	a   fyne.App
+	mw  fyne.Window
+	cg  *fyne.Container
+	cli *api.Client
+}
 
-	grid := container.NewMax()
-	toolbar := SetupToolbarUi(grid, cli)
-	borderedContainer := container.NewBorder(toolbar, nil, nil, nil, grid)
-	w.SetContent(borderedContainer)
-	w.SetPadded(false)
+// NewApp returns new F1neUi struct representing application main UI component
+func NewApp(cli *api.Client, title string) *F1neUi {
+	a := app.NewWithID("ioluas/f1ne")
+	mw := a.NewWindow(title)
+	mw.SetMaster()
+	cg := container.NewMax()
 
-	w.Show()
-	a.Run()
+	return &F1neUi{
+		a:   a,
+		mw:  mw,
+		cg:  cg,
+		cli: cli,
+	}
+}
+
+// Start does basic setup of initial UI and shows main window and runs the app
+func (a *F1neUi) Start(s fyne.Size) {
+	a.mw.Resize(s)
+
+	toolbar := a.setupToolbarUi()
+	borderedContainer := container.NewBorder(toolbar, nil, nil, nil, a.cg)
+	a.mw.SetContent(borderedContainer)
+	a.mw.SetPadded(false)
+
+	a.mw.Show()
+	a.a.Run()
 }

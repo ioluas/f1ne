@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"fyne.io/fyne/v2"
 	"git.mills.io/prologic/bitcask"
 	"github.com/ioluas/f1ne/api"
 	"github.com/ioluas/f1ne/ui"
@@ -55,7 +56,7 @@ func init() {
 	logrus.WithFields(logrus.Fields{"dir": appPath}).Trace("Got executable directory")
 
 	// Setup bitcask db, this would be used to cache API results so to save on http calls
-	db, err = bitcask.Open(appPath+"/db",
+	db, err = bitcask.Open(filepath.Join(appPath, "db"),
 		bitcask.WithMaxKeySize(2_048),
 		bitcask.WithMaxValueSize(102_400),
 		bitcask.WithSync(true),
@@ -65,6 +66,7 @@ func init() {
 	}
 	logrus.Trace("db connection open")
 
+	// Setup Ergast api client
 	client = api.NewClient(db)
 }
 
@@ -78,5 +80,7 @@ func main() {
 		logrus.Trace("closed db")
 	}(db)
 
-	ui.SetupAppUi(client)
+	// Create new Ui and start it
+	f1ne := ui.NewApp(client, "f1ne")
+	f1ne.Start(fyne.NewSize(1_200.0, 800.0))
 }
