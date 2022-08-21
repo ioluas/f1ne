@@ -4,7 +4,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"fyne.io/fyne/v2"
 	"git.mills.io/prologic/bitcask"
 	"github.com/ioluas/f1ne/api"
 	"github.com/ioluas/f1ne/ui"
@@ -28,19 +27,14 @@ func setupLogger() {
 		QuoteEmptyFields: true,
 	})
 	logrus.SetOutput(os.Stdout)
-	var logLvl logrus.Level
 	v, ok := os.LookupEnv("LOG_LEVEL")
 	if !ok {
-		logLvl = logrus.ErrorLevel
+		logrus.SetLevel(logrus.ErrorLevel)
+	} else if tmp, err := logrus.ParseLevel(v); err != nil {
+		logrus.SetLevel(logrus.ErrorLevel)
 	} else {
-		tmp, err := logrus.ParseLevel(v)
-		if err != nil {
-			logLvl = logrus.ErrorLevel
-		} else {
-			logLvl = tmp
-		}
+		logrus.SetLevel(tmp)
 	}
-	logrus.SetLevel(logLvl)
 	logrus.Trace("logger setup complete")
 }
 
@@ -82,5 +76,5 @@ func main() {
 
 	// Create new Ui and start it
 	f1ne := ui.NewApp(client, "f1ne")
-	f1ne.Start(fyne.NewSize(1_200.0, 800.0))
+	f1ne.Start(nil)
 }

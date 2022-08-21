@@ -19,19 +19,24 @@ func NewApp(cli *api.Client, title string) *F1neUi {
 	a := app.NewWithID("ioluas/f1ne")
 	mw := a.NewWindow(title)
 	mw.SetMaster()
-	cg := container.NewMax()
 
 	return &F1neUi{
 		a:   a,
 		mw:  mw,
-		cg:  cg,
+		cg:  container.NewMax(),
 		cli: cli,
 	}
 }
 
 // Start does basic setup of initial UI and shows main window and runs the app
-func (a *F1neUi) Start(s fyne.Size) {
-	a.mw.Resize(s)
+func (a *F1neUi) Start(s *fyne.Size) {
+	if s == nil {
+		s = &fyne.Size{
+			Width:  1_200,
+			Height: 800,
+		}
+	}
+	a.mw.Resize(*s)
 
 	toolbar := a.setupToolbarUi()
 	borderedContainer := container.NewBorder(toolbar, nil, nil, nil, a.cg)
