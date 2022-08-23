@@ -1,11 +1,12 @@
+// Package main app
 package main
 
 import (
 	"os"
 	"path/filepath"
 
-	"git.mills.io/prologic/bitcask"
-	"github.com/ioluas/f1ne/api"
+	"github.com/ioluas/f1ne/api/ergast"
+	"github.com/ioluas/f1ne/cache"
 	"github.com/ioluas/f1ne/ui"
 	"github.com/sirupsen/logrus"
 
@@ -14,8 +15,8 @@ import (
 
 var (
 	appPath string
-	db      *bitcask.Bitcask
-	client  *api.Client
+	cacheDb *cache.Cache
+	client  *ergast.Client
 )
 
 func setupLogger() {
@@ -50,29 +51,24 @@ func init() {
 	logrus.WithFields(logrus.Fields{"dir": appPath}).Trace("Got executable directory")
 
 	// Setup bitcask db, this would be used to cache API results so to save on http calls
-	db, err = bitcask.Open(filepath.Join(appPath, "db"),
-		bitcask.WithMaxKeySize(2_048),
-		bitcask.WithMaxValueSize(102_400),
-		bitcask.WithSync(true),
-	)
+	cacheDb, err = cache.NewCache(appPath)
 	if err != nil {
-		logrus.Fatalf("failed to open db: %v", err)
+		logrus.Fatal("failed to start")
 	}
-	logrus.Trace("db connection open")
 
 	// Setup Ergast api client
-	client = api.NewClient(db)
+	client = ergast.NewClient(cacheDb)
 }
 
 func main() {
-	// Close db connection on exit
-	defer func(db *bitcask.Bitcask) {
-		if err := db.Close(); err != nil {
+	// Close cache db connection on exit
+	defer func(c *cache.Cache) {
+		if err := c.Close(); err != nil {
 			logrus.Errorf("failed to close db file: %v", err)
 			return
 		}
 		logrus.Trace("closed db")
-	}(db)
+	}(cacheDb)
 
 	// Create new Ui and start it
 	f1ne := ui.NewApp(client, "f1ne")

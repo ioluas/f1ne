@@ -20,21 +20,21 @@ jobs:
         run: |
           sudo apt-get install -y gcc libgl1-mesa-dev xorg-dev
           go version
-          go install golang.org/x/lint/golint@latest
+          go install github.com/mgechev/revive@latest
           go install fyne.io/fyne/v2/cmd/fyne@latest
 
       - name: Run build & package
         run: |
           ./bundle.sh
-          go build .
-          go build --race .
+          go build -v -x .
+          go build -v -x --race .
           fyne package -os linux
 
       # Enable proper linting once docs added
-      - name: Run vet & lint
+      - name: Run vet & revive
         run: |
-          go vet .
-          golint . # -set_exit_status github.com/ioluas/f1ne github.com/ioluas/f1ne/api github.com/ioluas/f1ne/ui
+          go vet -x .
+          revive -config revive.toml -formatter stylish ./...
 
 #      - name: Run testing
 #        run: cd test && go test -v

@@ -1,0 +1,119 @@
+# Ignores files with "GENERATED" header, similar to golint
+ignoreGeneratedHeader = true
+
+# Sets the default severity to "warning"
+severity = "warning"
+
+# Sets the default failure confidence. The semantics behind this property
+# is that revive ignores all failures with a confidence level below 0.8.
+confidence = 0.8
+
+# Sets the error code for failures with severity "error"
+errorCode = 1
+
+# Sets the error code for failures with severity "warning"
+warningCode = 0
+
+# https://revive.run/r#cyclomatic
+[rule.cyclomatic]
+arguments = [10]
+
+# Sets the severity of the `package-comments` rule to "error".
+[rule.package-comments]
+severity = "error"
+
+# https://revive.run/r#add-constant
+[rule.add-constant]
+arguments = [{maxLitCount = "3",allowStrs ="\"\"",allowInts="0,1,2",allowFloats="0.0,0.,1.0,1.,2.0,2."}]
+
+# https://revive.run/r#argument-limit
+[rule.argument-limit]
+arguments =[4]
+
+# https://revive.run/r#cognitive-complexity
+[rule.cognitive-complexity]
+arguments =[7]
+
+# https://revive.run/r#atomic
+[rule.atomic]
+# https://revive.run/r#bare-return
+[rule.bare-return]
+
+# https://revive.run/r#blank-imports
+[rule.blank-imports]
+
+# https://revive.run/r#bool-literal-in-expr
+[rule.bool-literal-in-expr]
+
+# https://revive.run/r#call-to-gc
+[rule.call-to-gc]
+
+# https://revive.run/r#confusing-naming
+[rule.confusing-naming]
+
+# https://revive.run/r#confusing-results
+[rule.confusing-results]
+
+# https://revive.run/r#constant-logical-expr
+[rule.constant-logical-expr]
+
+# https://revive.run/r#context-as-argument
+[rule.context-as-argument]
+
+# https://revive.run/r#context-keys-type
+[rule.context-keys-type]
+
+# https://revive.run/r#deep-exit
+[rule.deep-exit]
+
+## https://revive.run/r#defer
+[rule.defer]
+arguments=[["call-chain","loop"]]
+
+# https://revive.run/r#dot-imports
+[rule.dot-imports]
+
+# https://revive.run/r#duplicated-imports
+[rule.duplicated-imports]
+
+# https://revive.run/r#early-return
+[rule.early-return]
+
+# https://revive.run/r#empty-block
+[rule.empty-block]
+
+# https://revive.run/r#empty-lines
+[rule.empty-lines]
+
+# https://revive.run/r#error-naming
+[rule.error-naming]
+
+# https://revive.run/r#error-return
+[rule.error-return]
+
+# https://revive.run/r#error-strings
+[rule.error-strings]
+
+# https://revive.run/r#errorf
+[rule.errorf]
+
+# https://revive.run/r#exported
+[rule.exported]
+
+## https://revive.run/r#
+#[rule.]
+## https://revive.run/r#
+#[rule.]
+## https://revive.run/r#
+#[rule.]
+## https://revive.run/r#
+#[rule.]
+## https://revive.run/r#
+#[rule.]
+## https://revive.run/r#
+#[rule.]
+## https://revive.run/r#
+#[rule.]
+## https://revive.run/r#
+#[rule.]
+#

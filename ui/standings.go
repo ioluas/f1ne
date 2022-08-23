@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"fmt"
+	f1w "github.com/ioluas/f1ne/ui/widget"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -10,46 +10,65 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func (a *F1neUi) setupStandingsUi() *container.Split {
-	items, standingTableContainer := []string{"Drivers", "Constructors"}, container.NewMax()
-	l := widget.NewList(
-		func() int { return len(items) },
-		func() fyne.CanvasObject { return widget.NewLabel("") },
+// StandingsUi represents Standings application view
+type StandingsUi struct {
+	items  []string
+	hsplit *container.Split
+	cnt    *fyne.Container
+	list   *widget.List
+}
+
+func (a *F1neUi) setupStandingsUi() *StandingsUi {
+	standingsUi := &StandingsUi{
+		items: []string{"Drivers", "Constructors"},
+		cnt:   container.NewMax(),
+	}
+	standingsUi.list = widget.NewList(
+		func() int {
+			return len(standingsUi.items)
+		},
+		func() fyne.CanvasObject {
+			return widget.NewLabel("")
+		},
 		func(id widget.ListItemID, co fyne.CanvasObject) {
 			object := co.(*widget.Label)
-			object.SetText(items[id])
+			object.SetText(standingsUi.items[id])
 			object.Refresh()
 		},
 	)
-	l.OnSelected = func(id widget.ListItemID) {
-		switch items[id] {
+	standingsUi.list.OnSelected = setStandingsListSelectionHandler(standingsUi, a)
+
+	standingsUi.hsplit = container.NewHSplit(standingsUi.list, standingsUi.cnt)
+	standingsUi.hsplit.Offset = 0.2
+
+	return standingsUi
+}
+
+func setStandingsListSelectionHandler(su *StandingsUi, a *F1neUi) func(id widget.ListItemID) {
+	return func(id widget.ListItemID) {
+		switch su.items[id] {
 		case "Drivers":
 			d, err := a.cli.CurrentDriversStandings()
 			if err != nil {
 				logrus.WithError(err).Error("failed to get current drivers standings")
-				dialog.ShowError(err, a.mw)
-				break
+				dialog.ShowError(err, a.mainWindow)
+				return
 			}
-			// create new 2 grid layout to show the drivers listing on left and details of clicked driver on right
 			driversSlice := d.StandingsTable.StandingsList.DriverStandings
-			// c := container.NewGridWithColumns(2, list, container.NewMax())
 			acc := widget.NewAccordion()
 			for _, dr := range driversSlice {
-				title := fmt.Sprintf("%s %s", dr.Driver.GivenName, dr.Driver.FamilyName)
-				card := widget.NewCard(title, "", nil)
-				acc.Append(widget.NewAccordionItem(title, card))
+				card := f1w.NewDriverCard(&dr.Driver)
+				acc.Append(widget.NewAccordionItem(card.Title, card))
 			}
-			standingTableContainer.RemoveAll()
-			standingTableContainer.Add(acc)
-			standingTableContainer.Refresh()
+			su.cnt.RemoveAll()
+			su.cnt.Add(acc)
+			su.cnt.Refresh()
+			return
 
 		case "Constructors":
-			// @todo.
+			return
+		default:
+			return
 		}
 	}
-
-	split := container.NewHSplit(l, standingTableContainer)
-	split.Offset = 0.2
-
-	return split
 }

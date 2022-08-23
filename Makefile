@@ -3,10 +3,10 @@
 run: build
 	./f1ne
 
-build: package dep
+build: bundle dep
 	go build -v -x .
 
-package: res/icons
+bundle: bundle.sh
 	./bundle.sh
 
 dep:
@@ -14,11 +14,12 @@ dep:
 
 vet:
 	go vet .
+	revive -config revive.toml -formatter friendly ./...
 
 clean:
 	rm -f f1ne ui/bundled.go
 
-all: package
+all: bundle
 	fyne package --appID ioluas/f1ne --release -os darwin --icon res/icons/Icon.png
 	fyne package --appID ioluas/f1ne --release -os linux --icon res/icons/Icon.png
 	fyne package --appID ioluas/f1ne --release -os windows --icon res/icons/Icon.png
