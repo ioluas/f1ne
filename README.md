@@ -1,6 +1,7 @@
-# <img style="background-color: white;" src="res/icons/Icon.png"> f1ne (Work In Progress 🚧)
+# <img style="background-color: white;" src="res/icons/Icon.png" width="48" height="48"> f1ne - work in progress 🚧
 
-![CI](https://github.com/ioluas/f1ne/actions/workflows/CICD.yml/badge.svg?branch=develop)
+[![CI](https://github.com/ioluas/f1ne/actions/workflows/CICD.yml/badge.svg?branch=develop)](https://github.com/ioluas/f1ne/actions/workflows/CICD.yml?query=branch:develop)
+[![Codeac](https://static.codeac.io/badges/2-525906907.svg "Codeac")](https://app.codeac.io/github/ioluas/f1ne)
 
 F1 racing application for viewing & graphing F1 related data.
 

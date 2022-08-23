@@ -42,7 +42,7 @@ func (a *F1neUI) Start(s *fyne.Size) {
 	}
 	a.mainWindow.Resize(*s)
 
-	toolbar := a.setupToolbarUi()
+	toolbar := a.setupToolbarUI()
 	borderedContainer := container.NewBorder(toolbar, nil, nil, nil, a.contentGrid)
 	a.mainWindow.SetContent(borderedContainer)
 	a.mainWindow.SetPadded(false)

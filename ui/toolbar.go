@@ -5,7 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func (a *F1neUI) setupToolbarUi() *widget.Toolbar {
+func (a *F1neUI) setupToolbarUI() *widget.Toolbar {
 	standings := widget.NewToolbarAction(embeddedRscStandings32Png, func() {
 		logrus.Debug("clicked standings")
 		a.contentGrid.RemoveAll()

@@ -26,8 +26,8 @@ jobs:
       - name: Run build & package
         run: |
           ./bundle.sh
-          go build -v -x .
-          go build -v -x --race .
+          go build -v .
+          go build -v --race .
           fyne package -os linux
 
       # Enable proper linting once docs added
