@@ -10,41 +10,41 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// StandingsUi represents Standings application view
-type StandingsUi struct {
+// StandingsUI represents Standings application view
+type StandingsUI struct {
 	items  []string
 	hsplit *container.Split
 	cnt    *fyne.Container
 	list   *widget.List
 }
 
-func (a *F1neUi) setupStandingsUi() *StandingsUi {
-	standingsUi := &StandingsUi{
+func (a *F1neUI) setupStandingsUI() *StandingsUI {
+	standingsUI := &StandingsUI{
 		items: []string{"Drivers", "Constructors"},
 		cnt:   container.NewMax(),
 	}
-	standingsUi.list = widget.NewList(
+	standingsUI.list = widget.NewList(
 		func() int {
-			return len(standingsUi.items)
+			return len(standingsUI.items)
 		},
 		func() fyne.CanvasObject {
 			return widget.NewLabel("")
 		},
 		func(id widget.ListItemID, co fyne.CanvasObject) {
 			object := co.(*widget.Label)
-			object.SetText(standingsUi.items[id])
+			object.SetText(standingsUI.items[id])
 			object.Refresh()
 		},
 	)
-	standingsUi.list.OnSelected = setStandingsListSelectionHandler(standingsUi, a)
+	standingsUI.list.OnSelected = setStandingsListSelectionHandler(standingsUI, a)
 
-	standingsUi.hsplit = container.NewHSplit(standingsUi.list, standingsUi.cnt)
-	standingsUi.hsplit.Offset = 0.2
+	standingsUI.hsplit = container.NewHSplit(standingsUI.list, standingsUI.cnt)
+	standingsUI.hsplit.Offset = 0.2
 
-	return standingsUi
+	return standingsUI
 }
 
-func setStandingsListSelectionHandler(su *StandingsUi, a *F1neUi) func(id widget.ListItemID) {
+func setStandingsListSelectionHandler(su *StandingsUI, a *F1neUI) func(id widget.ListItemID) {
 	return func(id widget.ListItemID) {
 		switch su.items[id] {
 		case "Drivers":

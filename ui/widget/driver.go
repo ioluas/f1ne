@@ -25,7 +25,7 @@ func NewDriverCard(driver *types2.Driver) *DriverCard {
 	dc.SetTitle(fmt.Sprintf("%s %s", driver.GivenName, driver.FamilyName))
 	dc.SetSubTitle(fmt.Sprintf("No. %d\tNationality: %s\tBorn: %s", driver.PermanentNumber, driver.Nationality,
 		driver.DateOfBirth))
-	u, err := url.Parse(driver.Url)
+	u, err := url.Parse(driver.URL)
 	if err != nil {
 		logrus.WithError(err).Error("failed to parse driver url")
 	} else {
