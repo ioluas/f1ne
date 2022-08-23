@@ -5,12 +5,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func (a *F1neUi) setupToolbarUi() *widget.Toolbar {
+func (a *F1neUI) setupToolbarUi() *widget.Toolbar {
 	standings := widget.NewToolbarAction(embeddedRscStandings32Png, func() {
 		logrus.Debug("clicked standings")
 		a.contentGrid.RemoveAll()
-		standingUi := a.setupStandingsUi()
-		a.contentGrid.Add(standingUi.hsplit)
+		standingUI := a.setupStandingsUI()
+		a.contentGrid.Add(standingUI.hsplit)
 		a.contentGrid.Refresh()
 	})
 	drivers := widget.NewToolbarAction(embeddedRscDrivers32Png, func() {

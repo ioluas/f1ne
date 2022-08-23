@@ -8,23 +8,23 @@ import (
 	"github.com/ioluas/f1ne/api/ergast"
 )
 
-// F1neUi is the main app Ui struct
-type F1neUi struct {
+// F1neUI is the main app Ui struct
+type F1neUI struct {
 	app         fyne.App
 	mainWindow  fyne.Window
 	contentGrid *fyne.Container
 	cli         *ergast.Client
 
-	standingsUi *StandingsUi
+	standingsUI *StandingsUI
 }
 
-// NewApp returns new F1neUi struct representing application main UI component
-func NewApp(cli *ergast.Client, title string) *F1neUi {
+// NewApp returns new F1neUI struct representing application main UI component
+func NewApp(cli *ergast.Client, title string) *F1neUI {
 	a := app.NewWithID("ioluas/f1ne")
 	mw := a.NewWindow(title)
 	mw.SetMaster()
 
-	return &F1neUi{
+	return &F1neUI{
 		app:         a,
 		mainWindow:  mw,
 		contentGrid: container.NewMax(),
@@ -33,7 +33,7 @@ func NewApp(cli *ergast.Client, title string) *F1neUi {
 }
 
 // Start does basic setup of initial UI and shows main window and runs the app
-func (a *F1neUi) Start(s *fyne.Size) {
+func (a *F1neUI) Start(s *fyne.Size) {
 	if s == nil {
 		s = &fyne.Size{
 			Width:  1_200,

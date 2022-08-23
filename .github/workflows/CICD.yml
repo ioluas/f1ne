@@ -33,8 +33,8 @@ jobs:
       # Enable proper linting once docs added
       - name: Run vet & revive
         run: |
-          go vet -x .
+          go vet .
           revive -config revive.toml -formatter stylish ./...
 
-#      - name: Run testing
-#        run: cd test && go test -v
+      - name: Run testing
+        run: go test -cover ./...

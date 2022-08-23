@@ -25,7 +25,7 @@ type WikiMediaPages struct {
 type WikimediaPage struct {
 	XMLName  xml.Name           `xml:"page"`
 	Title    string             `xml:"title,attr,omitempty"`
-	PageId   string             `xml:"pageid,attr,omitempty"`
+	PageID   string             `xml:"pageid,attr,omitempty"`
 	NS       string             `xml:"ns,attr,omitempty"`
 	Idx      string             `xml:"_idx,attr,omitempty"`
 	Original WikimediaThumbnail `xml:"thumbnail"`
