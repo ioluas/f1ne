@@ -36,5 +36,5 @@ jobs:
           go vet -x .
           revive -config revive.toml -formatter stylish ./...
 
-#      - name: Run testing
-#        run: cd test && go test -v
+      - name: Run testing
+        run: go test -cover ./...
