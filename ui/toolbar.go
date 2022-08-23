@@ -6,19 +6,18 @@ import (
 )
 
 func (a *F1neUi) setupToolbarUi() *widget.Toolbar {
-
 	standings := widget.NewToolbarAction(embeddedRscStandings32Png, func() {
-		logrus.Trace("clicked standings")
-		standingSplit := a.setupStandingsUi()
-		a.cg.RemoveAll()
-		a.cg.Add(standingSplit)
-		a.cg.Refresh()
+		logrus.Debug("clicked standings")
+		a.contentGrid.RemoveAll()
+		standingUi := a.setupStandingsUi()
+		a.contentGrid.Add(standingUi.hsplit)
+		a.contentGrid.Refresh()
 	})
 	drivers := widget.NewToolbarAction(embeddedRscDrivers32Png, func() {
-		logrus.Trace("clicked drivers")
+		logrus.Debug("clicked drivers")
 	})
 	seasons := widget.NewToolbarAction(embeddedRscSeasons32Png, func() {
-		logrus.Trace("clicked seasons")
+		logrus.Debug("clicked seasons")
 	})
 
 	return widget.NewToolbar(standings, widget.NewToolbarSeparator(), drivers, seasons)

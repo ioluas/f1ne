@@ -1,30 +1,34 @@
+// Package ui encapsulates f1ne ui components
 package ui
 
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
-	"github.com/ioluas/f1ne/api"
+	"github.com/ioluas/f1ne/api/ergast"
 )
 
+// F1neUi is the main app Ui struct
 type F1neUi struct {
-	a   fyne.App
-	mw  fyne.Window
-	cg  *fyne.Container
-	cli *api.Client
+	app         fyne.App
+	mainWindow  fyne.Window
+	contentGrid *fyne.Container
+	cli         *ergast.Client
+
+	standingsUi *StandingsUi
 }
 
 // NewApp returns new F1neUi struct representing application main UI component
-func NewApp(cli *api.Client, title string) *F1neUi {
+func NewApp(cli *ergast.Client, title string) *F1neUi {
 	a := app.NewWithID("ioluas/f1ne")
 	mw := a.NewWindow(title)
 	mw.SetMaster()
 
 	return &F1neUi{
-		a:   a,
-		mw:  mw,
-		cg:  container.NewMax(),
-		cli: cli,
+		app:         a,
+		mainWindow:  mw,
+		contentGrid: container.NewMax(),
+		cli:         cli,
 	}
 }
 
@@ -36,13 +40,13 @@ func (a *F1neUi) Start(s *fyne.Size) {
 			Height: 800,
 		}
 	}
-	a.mw.Resize(*s)
+	a.mainWindow.Resize(*s)
 
 	toolbar := a.setupToolbarUi()
-	borderedContainer := container.NewBorder(toolbar, nil, nil, nil, a.cg)
-	a.mw.SetContent(borderedContainer)
-	a.mw.SetPadded(false)
+	borderedContainer := container.NewBorder(toolbar, nil, nil, nil, a.contentGrid)
+	a.mainWindow.SetContent(borderedContainer)
+	a.mainWindow.SetPadded(false)
 
-	a.mw.Show()
-	a.a.Run()
+	a.mainWindow.Show()
+	a.app.Run()
 }
