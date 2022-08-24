@@ -37,10 +37,7 @@ jobs:
           revive -config revive.toml -formatter stylish ./...
 
       - name: Run testing
-        run: go test -cover ./...
+        run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
 
       - name: codecov.io
-        run: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
-          chmod +x codecov
-          ./codecov
+        uses: codecov/codecov-action@v3
