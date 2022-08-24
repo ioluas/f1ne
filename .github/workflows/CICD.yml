@@ -38,3 +38,9 @@ jobs:
 
       - name: Run testing
         run: go test -cover ./...
+
+      - name: codecov.io
+        run: |
+          curl -Os https://uploader.codecov.io/latest/linux/codecov chmod +x codecov ./codecov
+          chmod +x codecov
+          ./codecov
