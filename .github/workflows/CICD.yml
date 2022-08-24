@@ -41,6 +41,6 @@ jobs:
 
       - name: codecov.io
         run: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov chmod +x codecov ./codecov
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
           chmod +x codecov
           ./codecov
